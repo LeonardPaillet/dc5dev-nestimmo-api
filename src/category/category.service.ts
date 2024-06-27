@@ -26,6 +26,7 @@ export class CategoryService {
   findAll() {
     const categoryList = this.categoryRepository
       .createQueryBuilder('category')
+      .leftJoinAndSelect('category.posts', 'post')
       .getMany();
     return categoryList;
   }
@@ -35,6 +36,7 @@ export class CategoryService {
       const category = this.categoryRepository
         .createQueryBuilder('category')
         .where('category.id = :id', { id: id })
+        .leftJoinAndSelect('category.posts', 'post')
         .getOne();
 
       return category;
